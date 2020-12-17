@@ -6,6 +6,8 @@ module Part1
   , prob5
   ) where
 
+import Data.Numbers.Primes
+
 ------------------------------------------------------------
 -- PROBLEM #1
 --
@@ -87,4 +89,8 @@ prob4 n
 -- Числа n и k положительны и не превосходят 10^8.
 -- Число 1 не считается простым числом
 prob5 :: Integer -> Integer -> Bool
-prob5 = error "Implement me!"
+prob5 n bound = all
+	(\ divider -> checkDivider divider && checkDivider (n `div` divider))
+	[1..(floor . sqrt . fromIntegral) n]
+	where checkDivider :: Integer -> Bool
+	      checkDivider divider = divider < bound || n `mod` divider /= 0 || not (isPrime divider)
