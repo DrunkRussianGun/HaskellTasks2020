@@ -31,7 +31,10 @@ prob7 part = case part of
 -- Написать функцию, которая добавляет в соответствующее
 -- поле значения Color значение из ColorPart
 prob8 :: Color -> ColorPart -> Color
-prob8 = error "Implement me!"
+prob8 color part = case part of
+	Red   value -> Color (red color + value) (green color)         (blue color)
+	Green value -> Color (red color)         (green color + value) (blue color)
+	Blue  value -> Color (red color)         (green color)         (blue color + value)
 
 ------------------------------------------------------------
 -- PROBLEM #9
