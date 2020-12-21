@@ -99,7 +99,14 @@ prob12 tree = checkTree (Just tree) Nothing Nothing
 -- поддерево, в корне которого находится значение, если оно
 -- есть в дереве поиска; если его нет - вернуть Nothing
 prob13 :: Ord a => a -> Tree a -> Maybe (Tree a)
-prob13 = error "Implement me!"
+prob13 value tree = findValue value (Just tree)
+	where findValue value tree = maybe
+		Nothing
+		(\ tree -> case value `compare` root tree of
+			LT -> findValue value (left tree)
+			EQ -> Just tree
+			GT -> findValue value (right tree))
+		tree
 
 ------------------------------------------------------------
 -- PROBLEM #14
