@@ -6,8 +6,6 @@ module Part1
   , prob5
   ) where
 
-import Data.Numbers.Primes
-
 ------------------------------------------------------------
 -- PROBLEM #1
 --
@@ -93,4 +91,9 @@ prob5 n bound = all
 	(\ divider -> checkDivider divider && checkDivider (n `div` divider))
 	[1..(floor . sqrt . fromIntegral) n]
 	where checkDivider :: Integer -> Bool
-	      checkDivider divider = divider < bound || n `mod` divider /= 0 || not (isPrime divider)
+	      checkDivider divider = divider < bound || n `mod` divider /= 0 || not (isPrime primes divider)
+	      primes :: [Integer]
+	      primes = 2 : filter (isPrime primes) [3, 5..]
+	      isPrime :: [Integer] -> Integer -> Bool
+	      isPrime (firstPrime : restOfPrimes) x = x < firstPrime * firstPrime
+	      	|| x `rem` firstPrime /= 0 && isPrime restOfPrimes x
