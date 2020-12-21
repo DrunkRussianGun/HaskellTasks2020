@@ -57,11 +57,11 @@ test21 = testGroup "P21"
 test22 :: TestTree
 test22 = testGroup "P22"
   [ testCase "prob22 \"part iii izi\" == 6" $
-    prob22 "part iii izi" @?= 6
+    prob22 "parti iii izi" @?= 6
   , testCase "prob22 \"I have no letters\" == 1" $
-    prob22 "I have no letters" @?= 1
+    prob22 "I have no letters" @?= 0
   , testCase "prob22 \"no letters\" == 1 " $
-    prob22 "no letters" @?= 1
+    prob22 "no letters" @?= 0
   ]
 
 test23 :: TestTree
@@ -137,6 +137,6 @@ test31 = testGroup "P31"
 
 test32 :: TestTree
 test32 = testGroup "P32"
-  [ testCase "prob32 [2,3,5] 10 == [5+5, 5+3+2, 3+3+2+2]" $
-    prob32 [2,3,5] 10 @?= [[5,5],[5,3,2],[3,3,2,2]]
+  [ testCase "prob32 [2,3,5] 10 == [5+5, 5+3+2, 3+3+2+2, 2+2+2+2+2]" $
+    prob32 [2,3,5] 10 @?= [[5,5],[5,3,2],[3,3,2,2],[2,2,2,2,2]]
   ]
