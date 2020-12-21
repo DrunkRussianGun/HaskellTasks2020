@@ -8,7 +8,10 @@ import Part2.Types
 -- Написать функцию, которая преобразует значение типа
 -- ColorLetter в символ, равный первой букве значения
 prob6 :: ColorLetter -> Char
-prob6 = error "Implement me!"
+prob6 letter = case letter of
+	RED   -> 'R'
+	GREEN -> 'G'
+	BLUE  -> 'B'
 
 ------------------------------------------------------------
 -- PROBLEM #7
