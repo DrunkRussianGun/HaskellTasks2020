@@ -71,7 +71,8 @@ prob10 color = foldl
 --
 -- Найти сумму элементов дерева
 prob11 :: Num a => Tree a -> a
-prob11 = error "Implement me!"
+prob11 tree = sumOfBranch (left tree) + root tree + sumOfBranch (right tree)
+	where sumOfBranch branch = maybe 0 prob11 branch
 
 ------------------------------------------------------------
 -- PROBLEM #12
