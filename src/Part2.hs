@@ -42,7 +42,10 @@ prob8 color part = case part of
 -- Написать функцию, которая возвращает значение из
 -- ColorPart
 prob9 :: ColorPart -> Int
-prob9 = error "Implement me!"
+prob9 part = case part of
+	Red   value -> value
+	Green value -> value
+	Blue  value -> value
 
 ------------------------------------------------------------
 -- PROBLEM #10
