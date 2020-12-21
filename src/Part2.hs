@@ -19,7 +19,11 @@ prob6 letter = case letter of
 -- Написать функцию, которая проверяет, что значения
 -- находятся в диапазоне от 0 до 255 (границы входят)
 prob7 :: ColorPart -> Bool
-prob7 = error "Implement me!"
+prob7 part = case part of
+	Red   partValue -> checkValue partValue
+	Green partValue -> checkValue partValue
+	Blue  partValue -> checkValue partValue
+	where checkValue value = 0 <= value && value <= 255
 
 ------------------------------------------------------------
 -- PROBLEM #8
