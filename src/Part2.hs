@@ -83,7 +83,14 @@ prob11 tree = sumOfBranch (left tree) + root tree + sumOfBranch (right tree)
 -- а все элементы правого поддерева -- не меньше элемента
 -- в узле)
 prob12 :: Ord a => Tree a -> Bool
-prob12 = error "Implement me!"
+prob12 tree = checkTree (Just tree) Nothing Nothing
+	where checkTree :: Ord a => Maybe (Tree a) -> Maybe a -> Maybe a -> Bool
+	      checkTree tree minValue maxValue = isNothing tree ||
+	      	(let rootValue = (root . fromJust) tree
+	      	in (isNothing minValue || fromJust minValue <= rootValue) &&
+	      	(isNothing maxValue || rootValue < fromJust maxValue) &&
+	      	checkTree (left $ fromJust tree)  minValue (Just rootValue) &&
+	      	checkTree (right $ fromJust tree) (Just rootValue) maxValue)
 
 ------------------------------------------------------------
 -- PROBLEM #13
