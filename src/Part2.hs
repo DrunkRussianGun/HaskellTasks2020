@@ -2,6 +2,8 @@ module Part2 where
 
 import Part2.Types
 
+import Data.Maybe
+
 ------------------------------------------------------------
 -- PROBLEM #6
 --
@@ -53,7 +55,16 @@ prob9 part = case part of
 -- Написать функцию, которая возвращает компонент Color, у
 -- которого наибольшее значение (если такой единственный)
 prob10 :: Color -> Maybe ColorPart
-prob10 = error "Implement me!"
+prob10 color = foldl
+	(\ maxPart nextPart -> if isJust maxPart
+		then case compare (partValue maxPart) (partValue nextPart) of
+			LT -> nextPart
+			EQ -> Nothing
+			GT -> maxPart
+		else Nothing)
+	(Just $ Red $ red color)
+	[Just $ Green $ green color, Just $ Blue $ blue color]
+	where partValue = prob9 . fromJust
 
 ------------------------------------------------------------
 -- PROBLEM #11
