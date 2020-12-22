@@ -132,7 +132,15 @@ prob14 tree = fromJust $ replaceBrackets (Just tree) Nothing
 -- Выполнить вращение дерева влево относительно корня
 -- (https://en.wikipedia.org/wiki/Tree_rotation)
 prob15 :: Tree a -> Tree a
-prob15 = error "Implement me!"
+prob15 tree = let
+		rightLeftSubtree = (left . fromJust . right) tree
+		rightRightSubtree = (right . fromJust . right) tree
+		newTree leftBranch tree rightBranch = Tree leftBranch (root tree) rightBranch
+	in newTree (Just $ newTree (left tree)
+                              tree
+                              rightLeftSubtree)
+              (fromJust $ right tree)
+              rightRightSubtree
 
 ------------------------------------------------------------
 -- PROBLEM #16
