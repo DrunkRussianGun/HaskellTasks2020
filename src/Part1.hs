@@ -87,13 +87,14 @@ prob4 n
 -- Числа n и k положительны и не превосходят 10^8.
 -- Число 1 не считается простым числом
 prob5 :: Integer -> Integer -> Bool
-prob5 n bound = all
-	(\ divider -> checkDivider divider && checkDivider (n `div` divider))
-	[1..(floor . sqrt . fromIntegral) n]
-	where checkDivider :: Integer -> Bool
-	      checkDivider divider = divider < bound || n `mod` divider /= 0 || not (isPrime primes divider)
-	      primes :: [Integer]
-	      primes = 2 : filter (isPrime primes) [3, 5..]
-	      isPrime :: [Integer] -> Integer -> Bool
-	      isPrime (firstPrime : restOfPrimes) x = x < firstPrime * firstPrime
-	      	|| x `rem` firstPrime /= 0 && isPrime restOfPrimes x
+prob5 n bound = all (< bound) (primeDivisors n)
+	where
+		primeDivisors :: Integer -> [Integer]
+		primeDivisors = divisorsFrom 2
+
+		divisorsFrom :: Integer -> Integer -> [Integer]
+		divisorsFrom _ 1 = []
+		divisorsFrom minDivisor number
+			| minDivisor * minDivisor > number = [number]
+			| number `rem` minDivisor == 0 = minDivisor : divisorsFrom minDivisor (number `div` minDivisor)
+			| otherwise = divisorsFrom (minDivisor + 1) number
