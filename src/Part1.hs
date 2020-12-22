@@ -71,12 +71,18 @@ prob3 step n = prob3 step (step n) + 1
 --
 -- Число n по модулю не превосходит 10^5
 prob4 :: Integer -> Integer
-prob4 0 = 1
-prob4 1 = 1
-prob4 n
-	| n < 0 = prob4 (n + 2) - prob4 (n + 1)
-	| n > 1 = prob4 (n - 2) + prob4 (n - 1)
-
+prob4 index
+	| index < 0 = negativeFibonacci 1 1 index
+	| otherwise = positiveFibonacci 1 1 index
+		where
+			-- first > second > third => first = second + third => third = first - second
+			negativeFibonacci first second index = case index of
+				0 -> second
+				otherwise -> negativeFibonacci second (first - second) (succ index)
+			-- first < second < third => third = first + second
+			positiveFibonacci first second index = case index of
+				0 -> first
+				otherwise -> positiveFibonacci second (first + second) (pred index)
 
 ------------------------------------------------------------
 -- PROBLEM #5
