@@ -50,8 +50,24 @@ test9 = testGroup "P09"
 
 test10 :: TestTree
 test10 = testGroup "P10"
-  [ testCase "prob10 (100,50,0) == Just (R 100)" $
+  [ testCase "prob10 (0,0,50) == Just (B 50)" $
+    prob10 (Color 0 0 50) @?= Just (Blue 50)
+  , testCase "prob10 (0,50,0) == Just (G 50)" $
+    prob10 (Color 0 50 0) @?= Just (Green 50)
+  , testCase "prob10 (0,50,50) == Nothing" $
+    prob10 (Color 0 50 50) @?= Nothing
+  , testCase "prob10 (0,50,100) == Just (B 100)" $
+    prob10 (Color 0 50 100) @?= Just (Blue 100)
+  , testCase "prob10 (0,100,50) == Just (G 100)" $
+    prob10 (Color 0 100 50) @?= Just (Green 100)
+  , testCase "prob10 (50,0,0) == Just (R 50)" $
+    prob10 (Color 50 0 0) @?= Just (Red 50)
+  , testCase "prob10 (50,0,100) == Just (B 100)" $
+    prob10 (Color 50 0 100) @?= Just (Blue 100)
+  , testCase "prob10 (100,50,0) == Just (R 100)" $
     prob10 (Color 100 50 0) @?= Just (Red 100)
+  , testCase "prob10 (100,50,100) == Nothing" $
+    prob10 (Color 100 50 100) @?= Nothing
   , testCase "prob10 (100,100,100) == Nothing" $
     prob10 (Color 100 100 100) @?= Nothing
   ]

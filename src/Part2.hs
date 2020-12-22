@@ -55,16 +55,17 @@ prob9 part = case part of
 -- Написать функцию, которая возвращает компонент Color, у
 -- которого наибольшее значение (если такой единственный)
 prob10 :: Color -> Maybe ColorPart
-prob10 color = foldl
-	(\ maxPart nextPart -> if isJust maxPart
-		then case compare (partValue maxPart) (partValue nextPart) of
-			LT -> nextPart
-			EQ -> Nothing
-			GT -> maxPart
-		else Nothing)
-	(Just $ Red $ red color)
-	[Just $ Green $ green color, Just $ Blue $ blue color]
-	where partValue = prob9 . fromJust
+prob10 color = let
+	(maxPart, countOfMaxima) = foldl
+		(\ (maxPart, countOfMaxima) nextPart -> case (prob9 maxPart) `compare` (prob9 nextPart) of
+			LT -> (nextPart, 1)
+			EQ -> (maxPart, countOfMaxima + 1)
+			GT -> (maxPart, countOfMaxima))
+		(Red $ red color, 1)
+		[Green $ green color, Blue $ blue color]
+	in if countOfMaxima == 1
+		then Just $ maxPart
+		else Nothing
 
 ------------------------------------------------------------
 -- PROBLEM #11
