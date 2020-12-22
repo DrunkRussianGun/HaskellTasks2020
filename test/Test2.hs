@@ -190,6 +190,23 @@ test14 = testGroup "P14"
     prob14 tree4 @?= tree3
   , testCase "prob14 (nil x (x x x)) == (nil 4 (2 3 1))" $
     prob14 (Tree Nothing () (Just tree4)) @?= (Tree Nothing 4 (Just tree3))
+  , testCase "prob14 ((x x x) x (x x nil)) == ((4 5 3) 6 (1 2 nil))" $
+    prob14
+        (Tree (Just $ Tree (Just $ Tree Nothing () Nothing)
+                                   ()
+                                   (Just $ Tree Nothing () Nothing))
+                      ()
+                      (Just $ Tree (Just $ Tree Nothing () Nothing)
+                                   ()
+                                   Nothing))
+        @?=
+        Tree (Just $ Tree (Just $ Tree Nothing 4 Nothing)
+                                  5
+                                  (Just $ Tree Nothing 3 Nothing))
+                     6
+                     (Just $ Tree (Just $ Tree Nothing 1 Nothing)
+                                  2
+                                  Nothing)
   ]
 
 test15 :: TestTree

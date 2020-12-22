@@ -114,7 +114,17 @@ prob13 value tree = findValue value (Just tree)
 -- Заменить () на числа в порядке обхода "правый, левый,
 -- корень", начиная с 1
 prob14 :: Tree () -> Tree Int
-prob14 = error "Implement me!"
+prob14 tree = fromJust $ replaceBrackets (Just tree) Nothing
+	where replaceBrackets tree value = maybe
+		Nothing
+		(\ tree -> let
+				newRightTree = replaceBrackets (right tree) value
+				rightValue = maybe value (\ branch -> Just $ root branch + 1) newRightTree
+				newLeftTree = replaceBrackets (left tree) rightValue
+				leftValue = maybe rightValue (\ branch -> Just $ root branch + 1) newLeftTree
+				rootValue = fromMaybe (1 :: Int) leftValue
+			in Just $ Tree newLeftTree rootValue newRightTree)
+		tree
 
 ------------------------------------------------------------
 -- PROBLEM #15
