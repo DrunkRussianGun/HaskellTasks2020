@@ -126,7 +126,9 @@ prob25 number = digits 10 number == reverse (digits 10 number)
 -- сумма делителей одного (без учёта самого числа) равна
 -- другому, и наоборот
 prob26 :: Integer -> Integer -> Bool
-prob26 = error "Implement me!"
+prob26 first second = let
+		divisorsSum = sum . init . divisors
+	in divisorsSum first == second && divisorsSum second == first
 
 ------------------------------------------------------------
 -- PROBLEM #27
