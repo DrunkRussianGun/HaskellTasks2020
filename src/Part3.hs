@@ -65,7 +65,10 @@ prob21 = divisors
 -- Подсчитать произведение количеств букв i в словах из
 -- заданной строки (списка символов)
 prob22 :: String -> Integer
-prob22 = error "Implement me!"
+prob22 = toInteger . product . map lettersCount . words
+	where
+		lettersCount :: String -> Int
+		lettersCount = length . filter (== 'i')
 
 ------------------------------------------------------------
 -- PROBLEM #23
