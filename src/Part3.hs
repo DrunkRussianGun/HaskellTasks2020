@@ -5,7 +5,18 @@ module Part3 where
 --
 -- Проверить, является ли число N простым (1 <= N <= 10^9)
 prob18 :: Integer -> Bool
-prob18 = error "Implement me!"
+prob18 number = primeDivisors number == [number]
+	where
+		primeDivisors :: Integer -> [Integer]
+		primeDivisors = divisorsFrom 2
+
+		primeDivisorsFrom :: Integer -> Integer -> [Integer]
+		primeDivisorsFrom _ 1 = []
+		primeDivisorsFrom minDivisor number
+			| minDivisor * minDivisor > number = [number]
+			| number `rem` minDivisor == 0
+				= minDivisor : primeDivisorsFrom minDivisor (number `div` minDivisor)
+			| otherwise = primeDivisorsFrom (minDivisor + 1) number
 
 ------------------------------------------------------------
 -- PROBLEM #19
