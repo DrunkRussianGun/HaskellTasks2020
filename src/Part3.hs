@@ -112,7 +112,12 @@ prob24 number = checkTriangular 0 1
 -- Проверить, что запись числа является палиндромом (т.е.
 -- читается одинаково слева направо и справа налево)
 prob25 :: Integer -> Bool
-prob25 = error "Implement me!"
+prob25 number = digits 10 number == reverse (digits 10 number)
+	where
+		digits :: Integer -> Integer -> [Integer]
+		digits base number
+			| number < base = [number]
+			| otherwise   = number `rem` base : digits base (number `div` base)
 
 ------------------------------------------------------------
 -- PROBLEM #26
