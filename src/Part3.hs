@@ -1,15 +1,17 @@
 module Part3 where
 
+import Data.List.NonEmpty (group, toList)
+
 ------------------------------------------------------------
 -- PROBLEM #18
 --
 -- Проверить, является ли число N простым (1 <= N <= 10^9)
 prob18 :: Integer -> Bool
 prob18 number = primeDivisors number == [number]
-	where
-		primeDivisors :: Integer -> [Integer]
-		primeDivisors = divisorsFrom 2
 
+primeDivisors :: Integer -> [Integer]
+primeDivisors = primeDivisorsFrom 2
+	where
 		primeDivisorsFrom :: Integer -> Integer -> [Integer]
 		primeDivisorsFrom _ 1 = []
 		primeDivisorsFrom minDivisor number
@@ -25,7 +27,9 @@ prob18 number = primeDivisors number == [number]
 -- разложении числа N (1 <= N <= 10^9). Простые делители
 -- должны быть расположены по возрастанию
 prob19 :: Integer -> [(Integer, Int)]
-prob19 = error "Implement me!"
+prob19 number = let
+		groupings = (map toList . group . primeDivisors) number
+	in map (\ grouping -> (head grouping, length grouping)) groupings
 
 ------------------------------------------------------------
 -- PROBLEM #20
