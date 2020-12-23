@@ -79,7 +79,17 @@ prob22 = toInteger . product . map lettersCount . words
 -- M > 0 и N > 0. Если M > N, то вернуть символы из W в
 -- обратном порядке. Нумерация символов с единицы.
 prob23 :: String -> Maybe String
-prob23 = error "Implement me!"
+prob23 input = let
+		(startIndex, afterStartIndex) = head (reads input :: [(Int, String)])
+		(endIndex, afterEndIndex) = head (reads (drop 1 afterStartIndex) :: [(Int, String)])
+		string = drop 2 afterEndIndex
+		leftIndex = min startIndex endIndex
+		rightIndex = max startIndex endIndex
+	in if leftIndex <= length string && rightIndex <= length string
+		then let
+				order = if startIndex <= endIndex then (\ x -> x) else reverse
+			in Just $ (order . take (rightIndex - leftIndex + 1) . drop (leftIndex - 1)) string
+		else Nothing
 
 ------------------------------------------------------------
 -- PROBLEM #24
