@@ -57,7 +57,7 @@ divisors number = divisorsFrom 1 number
 -- Вернуть список всех делителей числа N (1<=N<=10^10) в
 -- порядке возрастания
 prob21 :: Integer -> [Integer]
-prob21 = error "Implement me!"
+prob21 = divisors
 
 ------------------------------------------------------------
 -- PROBLEM #22
