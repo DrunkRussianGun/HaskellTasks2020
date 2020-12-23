@@ -98,7 +98,13 @@ prob23 input = let
 -- представить как сумму чисел от 1 до какого-то K
 -- (1 <= N <= 10^10)
 prob24 :: Integer -> Bool
-prob24 = error "Implement me!"
+prob24 number = checkTriangular 0 1
+	where
+		checkTriangular :: Integer -> Integer -> Bool
+		checkTriangular sum currentNumber
+			| sum == number = True
+			| sum > number  = False
+			| otherwise     = checkTriangular (sum + currentNumber) (succ currentNumber)
 
 ------------------------------------------------------------
 -- PROBLEM #25
