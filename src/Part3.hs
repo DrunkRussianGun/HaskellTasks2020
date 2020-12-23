@@ -184,4 +184,9 @@ prob31 = error "Implement me!"
 -- указанного достоинства
 -- Сумма не превосходит 100
 prob32 :: [Int] -> Int -> [[Int]]
-prob32 = error "Implement me!"
+prob32 coins coinsSum
+	| coinsSum < minimum coins = []
+	| otherwise = [coin : nextCoins |
+		coin <- reverse coins,
+		nextCoins <- [] : prob32 (filter (<= coin) coins) (coinsSum - coin),
+		sum (coin : nextCoins) == coinsSum]
