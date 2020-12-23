@@ -38,7 +38,18 @@ prob19 number = let
 -- Совершенное число равно сумме своих делителей (меньших
 -- самого числа)
 prob20 :: Integer -> Bool
-prob20 = error "Implement me!"
+prob20 number = sum ((init . divisors) number) == number
+
+divisors :: Integer -> [Integer]
+divisors number = divisorsFrom 1 number
+	where
+		divisorsFrom :: Integer -> Integer -> [Integer]
+		divisorsFrom minDivisor number
+			| minDivisor * minDivisor > number = []
+			| minDivisor * minDivisor == number = [minDivisor]
+			| number `rem` minDivisor == 0
+				= [minDivisor] ++ divisorsFrom (succ minDivisor) number ++ [number `div` minDivisor]
+			| otherwise = divisorsFrom (succ minDivisor) number
 
 ------------------------------------------------------------
 -- PROBLEM #21

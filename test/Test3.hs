@@ -49,6 +49,7 @@ test20 = testGroup "P20"
   [ testCase "prob20 6 == T" $ prob20 6 @?= True
   , testCase "prob20 8 == F" $ prob20 8 @?= False
   , testCase "prob20 1 == F" $ prob20 1 @?= False
+  , testCase "prob20 1027971000 == F" $ prob20 1027971000 @?= False
   ]
 
 test21 :: TestTree
