@@ -72,6 +72,12 @@ test10 = testGroup "P10"
     prob10 (Color 100 100 100) @?= Nothing
   ]
 
+branch :: Maybe (Tree a) -> a -> Maybe (Tree a) -> Maybe (Tree a)
+branch left root right = Just $ Tree left root right
+
+leaf :: a -> Maybe (Tree a)
+leaf root = branch Nothing root Nothing
+
 -- (1 2 (3 4 (5 6 nil)))
 --   2
 --  / \
@@ -139,11 +145,12 @@ tree6Str = "((nil 1 2) 2 3)"
 --  \
 --   2
 tree6 :: Tree Int
-tree6 = Tree (Just $ Tree Nothing
-                          1
-                          (Just $ Tree Nothing 2 Nothing))
-             2
-             (Just $ Tree Nothing 3 Nothing)
+tree6 = Tree
+	(branch Nothing
+	        1
+	        (leaf 2))
+	2
+	(leaf 3)
 
 tree7Str :: String
 tree7Str = "(1 2 (2 3 nil))"
@@ -154,11 +161,12 @@ tree7Str = "(1 2 (2 3 nil))"
 --      /
 --     2
 tree7 :: Tree Int
-tree7 = Tree (Just $ Tree Nothing 1 Nothing)
-             2
-             (Just $ Tree (Just $ Tree Nothing 2 Nothing)
-                          3
-                          Nothing)
+tree7 = Tree
+	(leaf 1)
+	2
+	(branch (leaf 2)
+	        3
+	        Nothing)
 
 tree8Str :: String
 tree8Str = "(1 2 (1 3 nil))"
@@ -169,11 +177,12 @@ tree8Str = "(1 2 (1 3 nil))"
 --      /
 --     1
 tree8 :: Tree Int
-tree8 = Tree (Just $ Tree Nothing 1 Nothing)
-             2
-             (Just $ Tree (Just $ Tree Nothing 1 Nothing)
-                          3
-                          Nothing)
+tree8 = Tree
+	(leaf 1)
+	2
+	(branch (leaf 1)
+	        3
+	        Nothing)
 
 test11 :: TestTree
 test11 = testGroup "P11"
@@ -208,21 +217,21 @@ test14 = testGroup "P14"
     prob14 (Tree Nothing () (Just tree4)) @?= (Tree Nothing 4 (Just tree3))
   , testCase "prob14 ((x x x) x (x x nil)) == ((4 5 3) 6 (1 2 nil))" $
     prob14
-        (Tree (Just $ Tree (Just $ Tree Nothing () Nothing)
-                                   ()
-                                   (Just $ Tree Nothing () Nothing))
+        (Tree (branch (leaf ())
                       ()
-                      (Just $ Tree (Just $ Tree Nothing () Nothing)
-                                   ()
-                                   Nothing))
+                      (leaf ()))
+              ()
+              (branch (leaf ())
+                      ()
+                      Nothing))
         @?=
-        Tree (Just $ Tree (Just $ Tree Nothing 4 Nothing)
-                                  5
-                                  (Just $ Tree Nothing 3 Nothing))
-                     6
-                     (Just $ Tree (Just $ Tree Nothing 1 Nothing)
-                                  2
-                                  Nothing)
+        Tree (branch (leaf 4)
+                     5
+                     (leaf 3))
+             6
+             (branch (leaf 1)
+                     2
+                     Nothing)
   ]
 
 test15 :: TestTree
