@@ -133,15 +133,10 @@ prob14 tree = fromJust $ replaceBrackets (Just tree) Nothing
 -- Выполнить вращение дерева влево относительно корня
 -- (https://en.wikipedia.org/wiki/Tree_rotation)
 prob15 :: Tree a -> Tree a
-prob15 tree = let
-		rightLeftSubtree = (left . fromJust . right) tree
-		rightRightSubtree = (right . fromJust . right) tree
-		newTree leftBranch tree rightBranch = Tree leftBranch (root tree) rightBranch
-	in newTree (Just $ newTree (left tree)
-                              tree
-                              rightLeftSubtree)
-              (fromJust $ right tree)
-              rightRightSubtree
+prob15 oldTree = maybe
+	oldTree
+	(\ rightSubtree -> rightSubtree { left = Just $ oldTree { right = left rightSubtree } })
+	(right oldTree)
 
 ------------------------------------------------------------
 -- PROBLEM #16
@@ -149,15 +144,10 @@ prob15 tree = let
 -- Выполнить вращение дерева вправо относительно корня
 -- (https://en.wikipedia.org/wiki/Tree_rotation)
 prob16 :: Tree a -> Tree a
-prob16 tree = let
-		leftLeftSubtree = (left . fromJust . left) tree
-		leftRightSubtree = (right . fromJust . left) tree
-		newTree leftBranch tree rightBranch = Tree leftBranch (root tree) rightBranch
-	in newTree leftLeftSubtree
-              (fromJust $ left tree)
-              (Just $ newTree leftRightSubtree
-                              tree
-                              (right tree))
+prob16 oldTree = maybe
+	oldTree
+	(\ leftSubtree -> leftSubtree { right = Just $ oldTree { left = right leftSubtree } })
+	(left oldTree)
 
 ------------------------------------------------------------
 -- PROBLEM #17

@@ -184,6 +184,38 @@ tree8 = Tree
 	        3
 	        Nothing)
 
+tree9Str :: String
+tree9Str = "(nil 4 (nil 6 8))"
+-- 4
+--  \
+--   6
+--    \
+--     8
+tree9 :: Tree Int
+tree9 = Tree
+	Nothing
+	4
+	(branch Nothing
+	        6
+	        (leaf 8))
+
+tree10Str :: String
+tree10Str = "(4 6 8)"
+--   6
+--  / \
+-- 4   8
+tree10 :: Tree Int
+tree10 = Tree
+	(leaf 4)
+	6
+	(leaf 8)
+
+tree11Str :: String
+tree11Str = "(nil 5 nil)"
+-- 5
+tree11 :: Tree Int
+tree11 = Tree Nothing 5 Nothing
+
 test11 :: TestTree
 test11 = testGroup "P11"
   [ testCase "prob11 (1 2 (3 4 (5 6 nil))) == 21" $ prob11 tree1 @?= 21
@@ -240,6 +272,12 @@ test15 = testGroup "P15"
     prob15 tree1 @?= tree2
   , testCase "prob15 (x x x) == ((x x nil) x nil)" $
     prob15 tree4 @?= tree5
+  , testCase ("prob15 " ++ tree9Str ++ " == " ++ tree10Str) $
+    prob15 tree9 @?= tree10
+  , testCase "prob15 (nil x x) == (x x nil)" $
+    prob15 (Tree Nothing () (leaf ())) @?= (Tree (leaf ()) () Nothing)
+  , testCase ("prob15 " ++ tree11Str ++ " == " ++ tree11Str) $
+    prob15 tree11 @?= tree11
   ]
 
 test16 :: TestTree
@@ -248,6 +286,12 @@ test16 = testGroup "P16"
     prob16 tree2 @?= tree1
   , testCase "prob16 ((x x nil) x nil) == (x x x)" $
     prob16 tree5 @?= tree4
+  , testCase ("prob16 " ++ tree10Str ++ " == " ++ tree9Str) $
+    prob16 tree10 @?= tree9
+  , testCase "prob16 (x x nil) == (nil x x)" $
+    prob16 (Tree (leaf ()) () Nothing) @?= (Tree Nothing () (leaf ()))
+  , testCase ("prob16 " ++ tree11Str ++ " == " ++ tree11Str) $
+    prob16 tree11 @?= tree11
   ]
 
 test17 = testGroup "P17"
